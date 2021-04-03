@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">N2-Actuator</string>
+    <string name="blank" />
+    <string name="run_train">Train…</string>
+    <string name="n2_model">n2_model</string>
+
+</resources>
