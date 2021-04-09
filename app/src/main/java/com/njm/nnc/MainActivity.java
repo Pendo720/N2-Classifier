@@ -163,10 +163,10 @@ public class MainActivity extends AppCompatActivity {
                 List<Double> errorData = mTrainer.convergenceErrors();
                 if(!errorData.isEmpty()) {
                     Double error = errorData.get(0), avError = errorData.get(1);
-                    mError.setText(String.format(Locale.UK, "%2.2E", error));
-                    mAvError.setText(String.format(Locale.UK, "%2.2E", avError));
+                    mError.setText(String.format(Locale.UK, "Error: %2.2E", error));
+                    mAvError.setText(String.format(Locale.UK, "Average: %2.2E", avError));
                 }
-                mActionBar.setSubtitle(mN2State.getLabel() + String.format(Locale.UK, " [Iteration - %03d]",mTrainer.getIterationCount()));
+                mActionBar.setSubtitle(mN2State.getLabel() + String.format(Locale.UK, "... (Iteration : %03d)",mTrainer.getIterationCount()));
             }
         });
 
@@ -225,6 +225,7 @@ public class MainActivity extends AppCompatActivity {
     private void trainingLayout(){
         mCtrlsCV.setVisibility(View.VISIBLE);
         mProgress.setVisibility(View.VISIBLE);
+        mProgress.setIndeterminate(true);
         mError.setVisibility(View.VISIBLE);
         mAvError.setVisibility(View.VISIBLE);
         mCtrlButtons.setVisibility(View.VISIBLE);

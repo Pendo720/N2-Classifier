@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public enum N2State {
-    None("None"), Training("Training"), Validating("Validating"), Operating("Operating");
+    None("None"), Training("Training"), Validating("Validating"), Operating("Online");
     final String mLabel;
     N2State(String sLabel){
         mLabel = sLabel;

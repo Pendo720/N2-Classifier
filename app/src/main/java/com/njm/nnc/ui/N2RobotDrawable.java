@@ -42,8 +42,7 @@ public class N2RobotDrawable extends Drawable {
         mPaint.setColor(Color.BLUE);
         mTxtPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTxtPaint.setTextAlign(Paint.Align.CENTER);
-        mTxtPaint.setTextSize(64);
-        mTxtPaint.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        mTxtPaint.setTextSize(48);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -78,45 +77,47 @@ public class N2RobotDrawable extends Drawable {
         final int linksCount = _data.size();
         final int linkThickness = 60;
 
-        final int linkLength = 2*(dim-baseWidth)/linksCount;
         mPaint.setColor(Color.LTGRAY);
         mPaint.setStrokeWidth(25);
-        canvas.drawText(String.valueOf(mInput.intValue()), w-margin_3, h-margin_3, mTxtPaint);
+        canvas.drawText(String.format("%02d: %0" + linksCount +"d", mInput.intValue(), Integer.valueOf(Integer.toBinaryString(mInput.intValue()))), cx-margin_3, margin_3, mTxtPaint);
 //        reference line
         mPaint.setStrokeWidth(2*margin);
         canvas.drawLine(margin, h, 2*dim-margin, h, mPaint);
         mPaint.setStrokeWidth(80);
-        canvas.drawLine(dim-margin_3, h, dim+margin_3, h, mPaint);
+
+        canvas.drawCircle(dim, h, margin_3/2, mPaint);
         final Integer[] counter = {1};
         canvas.translate(dim, h);
 
         if(mIsCorrect) {
             Float[] xy = {0f, 0f};
             double angle = Math.PI/(linksCount);
+            final int linkLength = 2*(dim-baseWidth)/linksCount;
+
             final double[] ang = new double[1];
             _data.forEach( d -> {
                 int c = counter[0];
-                mPaint.setColor(LinkColours[c%LinkColours.length]);
-                mPaint.setStrokeWidth(1.5f*linkThickness/c);
+                mPaint.setStrokeWidth(1.75f*linkThickness/c);
+                ang[0] = angle*(d == 1.0?2.25:1);
+                ang[0] *= ( c==1?c:(c-1));
+
+                float fx = (float) (xy[0]+linkLength*cos(ang[0]));
+                float fy = xy[1] - (float) (linkLength*sin(ang[0]));
+
                 if(c == 1) {
-                    canvas.drawLine(0, (1 - c) * linkLength, 0, -c * linkLength, mPaint);
-                    xy[0] = 0f;
-                    xy[1] = (float)(-c*linkLength);
+                    canvas.drawLine(0, (1 - c) * linkLength, fx, fy, mPaint);
                 }
                 else{
-                    ang[0] = angle*(d == 1.0?1:2);
-                    ang[0] *= (c-1);
-                    float fx = (float) (xy[0]+linkLength*cos(ang[0])), fy = xy[1] - (float) (linkLength*sin(ang[0]));
                     mPaint.setColor(ColorUtils.blendARGB(Color.LTGRAY, LinkColours[c%LinkColours.length], 0.1f*c));
                     canvas.drawCircle(xy[0], xy[1], half_margin, mPaint);
                     canvas.drawLine(xy[0], xy[1], fx, fy, mPaint);
-                    xy[0] = fx;
-                    xy[1] = fy;
                 }
+                xy[0] = fx;
+                xy[1] = fy;
                 counter[0] += 1;
             });
 
-            mPaint.setColor(Color.BLACK);
+            mPaint.setColor(Color.RED);
             canvas.drawCircle(xy[0], xy[1], half_margin, mPaint);
         }
     }

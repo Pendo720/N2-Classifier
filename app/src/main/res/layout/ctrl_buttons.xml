@@ -25,9 +25,7 @@
         android:paddingBottom="4dp"
         android:text="@string/run_train"
         android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textColor="@android:color/black" />
 
     <TextView
         android:id="@+id/txtAvError"
@@ -41,8 +39,6 @@
         android:paddingBottom="4dp"
         android:text="@string/run_train"
         android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textColor="@android:color/black" />
 
 </LinearLayout>
