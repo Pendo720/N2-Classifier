@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
@@ -142,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         List<Integer> data = new ArrayList<>();
         IntStream.range(0, iterations).forEach(data::add);
         String sFile = N2Trainer.savedModelFilename(_topology, getString(R.string.n2_model));
-        List<String> allFiles = Arrays.asList(getFilesDir().list());
+        List<String> allFiles = Arrays.asList(Objects.requireNonNull(getFilesDir().list()));
 
         boolean hasSavedModel = (allFiles.stream().filter(s -> s.equals(sFile)).count() >= 1);
         mN2State = !hasSavedModel ? N2State.None : mN2State;
@@ -239,6 +240,8 @@ public class MainActivity extends AppCompatActivity {
         mError.setVisibility(View.GONE);
         mAvError.setVisibility(View.GONE);
         mCtrlButtons.setVisibility(View.GONE);
+
+        Toast.makeText(this, "Activate proximity sensor...", Toast.LENGTH_LONG).show();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

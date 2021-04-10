@@ -1,9 +1,13 @@
 package com.njm.nnc.models;
 
 import android.os.Build;
+
 import androidx.annotation.RequiresApi;
+
 import com.njm.nnc.N2Utils;
+
 import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;

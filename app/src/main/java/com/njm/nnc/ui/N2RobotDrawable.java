@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.Log;
@@ -85,7 +84,7 @@ public class N2RobotDrawable extends Drawable {
         canvas.drawLine(margin, h, 2*dim-margin, h, mPaint);
         mPaint.setStrokeWidth(80);
 
-        canvas.drawCircle(dim, h, margin_3/2, mPaint);
+        canvas.drawCircle(dim, h, (int)(margin_3/2), mPaint);
         final Integer[] counter = {1};
         canvas.translate(dim, h);
 
@@ -97,13 +96,13 @@ public class N2RobotDrawable extends Drawable {
             final double[] ang = new double[1];
             _data.forEach( d -> {
                 int c = counter[0];
-                mPaint.setStrokeWidth(1.75f*linkThickness/c);
                 ang[0] = angle*(d == 1.0?2.25:1);
                 ang[0] *= ( c==1?c:(c-1));
 
                 float fx = (float) (xy[0]+linkLength*cos(ang[0]));
                 float fy = xy[1] - (float) (linkLength*sin(ang[0]));
 
+                mPaint.setStrokeWidth(1.75f*linkThickness/c);
                 if(c == 1) {
                     canvas.drawLine(0, (1 - c) * linkLength, fx, fy, mPaint);
                 }
@@ -132,7 +131,11 @@ public class N2RobotDrawable extends Drawable {
             int intValue = mInput.intValue();
             List<Double> exploded = N2Utils.int2BitDoubles(intValue, data.size() - 1);
             mIsCorrect = _data.toString().equals(exploded.toString());
-            invalidateSelf();
+            if(mIsCorrect) {
+                invalidateSelf();
+            }else{
+                Log.i(getClass().getSimpleName(), "update: Error - " + data);
+            }
         }
     }
 }
